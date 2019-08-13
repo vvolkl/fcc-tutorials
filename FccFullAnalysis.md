@@ -1,4 +1,4 @@
-[]() FCC Pythia + Delphes + Heppy Analysis
+FCC Pythia + Delphes + Heppy Analysis
 ==========================================================
 
 -   [Overview](#overview)
@@ -8,7 +8,7 @@
 -   [Homework exercise](#homework-exercise)
 
 
-[]() Overview
+Overview
 ---------------------
 
 
@@ -22,17 +22,18 @@ This tutorial will teach you how to:
 
 **This tutorial has been tested on bash shells. It is not guaranteed to work on other shells.**
 
-[]()Part I: Generate and simulate Events with FCCSW
+Part I: Generate and simulate Events with FCCSW
 ----------------------------------------------------
 
-First, log into lxplus, and **install the FCC software**, using [git](./FccSoftwareGit.md):
+First, make sure your **setup of the FCC software** is working correctly. A quick check is that the executable `fccrun`, which allows you to run jobs in the Gaudi framework is available on the command line:
 
+```python
+%%bash
+which fccrun
 ```
-git clone https://github.com/HEP-FCC/FCCSW.git
-cd FCCSW
-source ./init.sh
-make -j 12
-```
+
+If the above command fails without printing a path like `/cvmfs/fcc.cern.ch/sw/releases/fccsw/0.10/x86_64-centos7-gcc62-opt/scripts/fccrun` check [the relevant documentation page to setup FCC software](https://github.com/HEP-FCC/fcc-tutorials/blob/master/FccSoftwareGettingStarted.md).
+
 
 For this tutorial we will consider the following **physics processes**:
 
@@ -44,12 +45,12 @@ or generate the hard process itself and then run the parton shower and hadroniza
 as input a Pythia8 configuration file** (.cmd), and does not need to know which approach was used. 
 
 For this tutorial, we are going to run Pythia8 on previously produced LHE files (with [MG5_aMCatNLO](https://launchpad.net/mg5amcnlo)). Additional Pythia8
-configurations are present in ```Generation/data```. 
+configurations are present in `Generation/data`. 
 
 The following commands will run Pythia8 and Delphes and produce the relevant signal and background samples:
 
-```
-./run fccrun.py Sim/SimDelphesInterface/options/PythiaDelphes_config.py --inputfile=Generation/data/Pythia_pp_h_4l.cmd --outputfile=pp_h_4l.root --nevents=1000
+```bash
+ fccrun Sim/SimDelphesInterface/options/PythiaDelphes_config.py --inputfile=Generation/data/Pythia_pp_h_4l.cmd --outputfile=pp_h_4l.root --nevents=1000
 ./run fccrun.py Sim/SimDelphesInterface/options/PythiaDelphes_config.py --inputfile=Generation/data/Pythia_pp_zgzg_4l.cmd --outputfile=pp_zgzg_4l.root --nevents=1000
 ```
 
