@@ -8,7 +8,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        SETUP: ['/cvmfs/sw.hsf.org/key4hep/setup.sh', '/cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh']
         PAGE: ['software-basics/exploring-fcc-files',
                'software-basics/fccsw',
                'fast-sim-and-analysis/FccFastSimAnalysis',
@@ -19,6 +18,7 @@ jobs:
                'full-detector-simulations/FCCeeDriftChamber/FCCeeDriftChamber',
                'full-detector-simulations/FCCeeGuineaPigIRBackgrounds/README',
               ]
+        SETUP: ['/cvmfs/sw.hsf.org/key4hep/setup.sh', '/cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh']
     steps:
     - uses: actions/checkout@v2
     - uses: cvmfs-contrib/github-action-cvmfs@v2
@@ -35,11 +35,12 @@ jobs:
         python -m ipykernel install --name bash;\
         '
 
-    - name: ExploringFiles  
+    - name: RunPage
       run: |
         docker exec CI_container /bin/bash -c 'cd ./Package;\
         source ${{ matrix.SETUP }};\
         export PATH=$HOME/.local/bin/:$PATH;\
+        echo "cat .github/scripts/yamlheader.md  $${{ matrix.PAGE }}.md > ${{ matrix.PAGE }}.md";\
         cat .github/scripts/yamlheader.md  $${{ matrix.PAGE }}.md > ${{ matrix.PAGE }}.md;\
         jupytext ${{ matrix.PAGE }}.md -o ${{ matrix.PAGE }}.ipynb --execute;\
         '
