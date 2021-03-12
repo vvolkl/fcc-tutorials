@@ -40,7 +40,7 @@ jobs:
         docker exec CI_container /bin/bash -c 'cd ./Package;\
         source ${{ matrix.SETUP }};\
         export PATH=$HOME/.local/bin/:$PATH;\
-        echo "cat .github/scripts/yamlheader.md  $${{ matrix.PAGE }}.md > ${{ matrix.PAGE }}.md";\
-        cat .github/scripts/yamlheader.md  $${{ matrix.PAGE }}.md > ${{ matrix.PAGE }}.md;\
+        echo "cat .github/scripts/yamlheader.md  ${{ matrix.PAGE }}.md > ${{ matrix.PAGE }}.md";\
+        cat .github/scripts/yamlheader.md  ${{ matrix.PAGE }}.md > ${{ matrix.PAGE }}.md;\
         jupytext ${{ matrix.PAGE }}.md -o ${{ matrix.PAGE }}.ipynb --execute;\
         '
